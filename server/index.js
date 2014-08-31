@@ -2,28 +2,16 @@ var http = require('http');
 var path = require('path');
 var fs = require('fs');
 
-var stat = require('node-static');
-var busboy = require('busboy');
-
 http.createServer(function(req, res) {
     if(req.method === 'POST') {
-        var busser = new busboy({ headers: req.headers });
-        busser.on('file', function(fieldname, file, filename, encoding, mimetype) {
-            if(mimetype !== 'image/gif') {
-                res.writeHead(400);
-                res.end();
-            } else {
-                fs.mkdirSync(__dirname + '/uploads');
-                var pathName = __dirname + '/uploads/' + new Date().getTime() + '.gif';
-                file.pipe(fs.createWriteStream(pathName));
-            }
-        });
-        busser.on('finish', function() {
+        if(!fs.existsSync(__dirname + '/uploads')) fs.mkdirSync(__dirname + '/uploads');
+        var pathName = __dirname + '/uploads/' + new Date().getTime() + '.gif';
+        var dest = fs.createWriteStream(pathName);
+        req.pipe(dest);
+        req.on('end', function() {
             res.writeHead(200);
-            console.log('wrote file');
             res.end();
         });
-        return req.pipe(busser);
     } else if(req.method === 'GET') {
         if(req.headers.accept.match(/text\/html/g)) {
             fs.readFile('./index.html', 'binary', function(err, file) {

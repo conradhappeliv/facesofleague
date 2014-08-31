@@ -1,8 +1,4 @@
 {
     "name": "facesofleague",
-    "version": "0.0.1",
-    "dependencies": {
-        "busboy": "*",
-        "node-static": "*"
-    }
+    "version": "0.0.1"
 }
