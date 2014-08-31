@@ -58,7 +58,7 @@ app.get('/uploads/*', function(req, res) {
     }).resume();
 });
 
-app.get('/', function(req, res) {
+app.get('/*', function(req, res) {
     req.addListener('end', function() {
         fileServer.serve(req, res);
     }).resume();
