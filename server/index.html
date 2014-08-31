@@ -1,14 +1,14 @@
 <html>
     <head>
     	<style>
-    	@media (min-width: 700px){
-    		img {
-    			width:80%;
+    	@media (min-width: 768px){
+    		div {
+    			width:50%;
     		}
     	}
-    	@media (max-width: 699px) {
-    		img {
-    			width:47%;
+    	@media (max-width: 767px) {
+    		div {
+    			width:100%;
     		}
     	}
     	@font-face {
@@ -36,7 +36,9 @@
     			clear:both;
     		}
     		img {
-    			height: auto;	
+                margin: 0 -5px;
+    			height: auto;
+                width:100%;
     			display:block;
     			border-style: solid; 
     			float: left;
@@ -46,14 +48,25 @@
     			-o-border-image: url(border1.png) 50 3 50 4 stretch; 
     			border-image: url(border1.png) 50 3 50 4 stretch;
     			margin-bottom: 2%;
+                padding:0;
     		}
     		div {
-    			font
     			font-family: lolFont;
     			font-size: 10;
     			padding-bottom: 5px;
     		}
-    		
+
+            .imgDiv {
+                float:left;
+                padding:0;
+            }
+    		h1 {
+    			font-family: lolFont;
+    			font-weight: bold;
+    			font-size: 20;
+    			display:block;
+    			clear:both;
+    		}
 
     	</style>
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -61,7 +74,7 @@
     </head>
     <body>
     	<h1>This is the Header</h1>
-    	<div>Test font. League of Legends.</div>
+    	<div id="appendAfter">Test font. League of Legends.</div>
         <!--<h1>faces of league</h1>
         <h4>wuddup nerd</h4>-->
         <script>
@@ -80,10 +93,10 @@
             var prependToBody = function(arr) {
                 console.log(arr);
                 for(var i = arr.length-1; i >= 0; i--) {
-                    console.log(i);
-                    var imgEl = document.createElement('img');
-                    imgEl.src = './uploads/' + arr[i];
-                    document.body.insertBefore(imgEl, document.body.firstChild);
+                    var divEl = document.createElement('div');
+                    divEl.className = 'imgDiv';
+                    divEl.innerHTML = '<img src="./uploads/' + arr[i] + '">';
+                    document.body.insertBefore(divEl, document.getElementById('appendAfter').nextSibling);
                 }
             };
 
