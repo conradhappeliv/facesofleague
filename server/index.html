@@ -1,12 +1,36 @@
 <html>
     <head>
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <title>faces of league</title>
     </head>
     <body>
         <h1>faces of league</h1>
         <h4>wuddup nerd</h4>
         <script>
+            var poll = function() {
+                try { var lastImg = document.getElementsByTagName('img')[0].src; }
+                catch(e) {}
+                $.ajax('/gifs' + (lastImg ? '?last='+lastImg : ''), {
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function(data) {
+                    prependToBody(data);
+                    poll();
+                });
+            };
 
+            var prependToBody = function(arr) {
+                console.log(arr);
+                for(var i = arr.length-1; i >= 0; i--) {
+                    console.log(i);
+                    var imgEl = document.createElement('img');
+                    imgEl.src = './uploads/' + arr[i];
+                    document.body.insertBefore(imgEl, document.body.firstChild);
+                }
+            };
+
+            // ACTIVATE THE POLLING
+            poll();
         </script>
     </body>
 </html>
